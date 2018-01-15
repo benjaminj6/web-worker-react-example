@@ -41,12 +41,14 @@ class WebWorkerCounter extends Component {
   `
 
   componentWillMount() {
-    this.worker = new Worker()
-    this.worker.onmessage = ({ data }) => {
-      console.log('the worker sent a message, the new count is', data.count)
-      this.setState({
-        count: data.count
-      })
+    if (typeof window !== 'undefined') {
+      this.worker = new Worker()
+      this.worker.onmessage = ({ data }) => {
+        console.log('the worker sent a message, the new count is', data.count)
+        this.setState({
+          count: data.count
+        })
+      }
     }
   }
 
