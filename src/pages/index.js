@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { css } from 'emotion'
-
-const Worker = require('worker-loader!../counter-worker.js')
+import { withPrefix } from 'gatsby-link'
+// const Worker = require('worker-loader!../counter-worker.js')
 
 class WebWorkerCounter extends Component {
   state = {
@@ -42,7 +42,7 @@ class WebWorkerCounter extends Component {
 
   componentWillMount() {
     if (typeof window !== 'undefined') {
-      this.worker = new Worker()
+      this.worker = new Worker(withPrefix('/static/counter-worker.js'))
       this.worker.onmessage = ({ data }) => {
         console.log('the worker sent a message, the new count is', data.count)
         this.setState({
